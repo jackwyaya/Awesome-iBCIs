@@ -245,6 +245,7 @@ Large, pretrained, transferable models for neural data.
 *2024*
 - 📄 **Towards a "universal translator" for neural dynamics (IBL-MtM)** (Zhang, Wang et al., 2024, NeurIPS) — multi-task masking foundation model. [paper](https://arxiv.org/html/2407.14668v1) · [💻 code](https://ibl-mtm.github.io/)
 - 📄 **Neuroformer: multimodal & multitask generative pretraining for brain data** (Antoniades et al., 2024, ICLR) — [paper](https://arxiv.org/abs/2311.00136) · [💻 code](https://github.com/a-antoniades/Neuroformer)
+- 📄 **Brant-2: foundation model for brain signals** (ZJU-BrainNet, 2024) — extends Brant to multi-modal (sEEG + EEG) with broader cross-subject coverage. [paper](https://arxiv.org/html/2402.10251v3)
 
 *2025*
 - 📄 **POYO+: multi-session, multi-task decoding across cell-types & regions** (Azabou et al., 2025, ICLR) — [paper](https://openreview.net/forum?id=IuU0wcO0mo) · [💻 code](https://poyo-plus.github.io/)
@@ -279,14 +280,44 @@ Large, pretrained, transferable models for neural data.
 
 ### Long-Term Stability & Recalibration (长期稳定性)
 
-Keeping a decoder working over months/years despite neural drift and electrode degradation.
+Keeping a decoder working over months/years despite neural drift and electrode degradation. **This is the deepest section of the list** — organized into the manifold-stability foundations, manifold-alignment stabilizers, domain-adaptation / adversarial alignment, clinical self-calibration, and the instability-measurement / benchmark works that ground them.
 
-- 📄 **Stabilization of a BCI via alignment of low-dimensional neural spaces** (Degenhart / Bishop / Yu, 2020, Nature Biomedical Engineering) — manifold-alignment self-recalibration. [paper](https://users.ece.cmu.edu/~byronyu/papers/DegenhartBishopNatBME2020.pdf)
-- 📄 **Stabilizing BCIs through alignment of latent dynamics (NoMAD)** (Karpowicz / Pandarinath, 2025, Nature Communications) — [paper](https://www.nature.com/articles/s41467-025-59652-y) · [💻 code](https://snel.ai/publication/stabilizing-brain-computer-interfaces-through-alig/)
+**Neural-manifold foundations of stability**
+- 📄 **Neural manifolds for the control of movement** (Gallego / Perich / Solla / Miller, 2017, Neuron) — defines "neural modes" / the manifold framework; conceptual basis for treating the manifold as the stable substrate. [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC6122849/)
+- 📄 **Cortical population activity within a preserved neural manifold underlies multiple motor behaviors** (Gallego / Perich / Miller, 2018, Nature Communications) — one preserved manifold supports many behaviors. [paper](https://www.nature.com/articles/s41467-018-06560-z)
+- 📄 **A neural population mechanism for rapid learning** (Perich / Gallego / Miller, 2018, Neuron) — new output without changing within-manifold structure → manifold as stable scaffold. [paper](https://www.sciencedirect.com/science/article/pii/S0896627318308328)
+- 📄 **Learning by neural reassociation** (Golub / Yu / Chase / Batista, 2018, Nature Neuroscience) — short-term BCI learning recombines fixed activity patterns. [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC5876156/)
+- 📄 **Long-term stability of cortical population dynamics underlying consistent behavior** (Gallego / Perich / Miller, 2020, Nature Neuroscience) — **cornerstone**: latent dynamics stay stable across years, enabling manifold-based decoders that survive while unit-based decoders fail. [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC7007364/)
+- 📄 **Preserved neural dynamics across animals performing similar behaviour** (Safaie / Gallego / Miller, 2023, Nature) — CCA-aligned latent dynamics transfer across individuals. [paper](https://www.nature.com/articles/s41586-023-06714-0) · [💻 code](https://github.com/BeNeuroLab/2022-preserved-dynamics)
+- 📄 **Aligning latent representations of neural activity** (Gallego group, 2022, Nature Reviews Neuroscience) — review: low-dim latent alignment as the principled way to compare neural activity across time/neurons/individuals. [paper](https://pubmed.ncbi.nlm.nih.gov/36443379/)
+
+**Manifold-alignment stabilizers & recalibration**
+- 📄 **Stabilization of a BCI via alignment of low-dimensional neural spaces** (Degenhart / Bishop / Yu, 2020, Nature Biomedical Engineering) — unsupervised manifold-alignment stabilizer. [paper](https://users.ece.cmu.edu/~byronyu/papers/DegenhartBishopNatBME2020.pdf) · [💻 code](https://github.com/alandegenhart/stabilizedbci)
+- 📄 **Stabilizing BCIs through alignment of latent dynamics (NoMAD)** (Karpowicz / Pandarinath, 2025, Nature Communications) — LFADS + unsupervised distribution alignment. [paper](https://www.nature.com/articles/s41467-025-59652-y) · [💻 code](https://github.com/snel-repo/nomad)
 - 📄 **Plug-and-play stability for intracortical BCIs** (2024, IEEE) — [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC11086983/)
 - 📄 **Plug-and-play stability: a one-year demonstration of seamless brain-to-text** (Fan et al., 2023, NeurIPS) — unsupervised self-recalibration, 93.84% over a year. [paper](https://proceedings.neurips.cc/paper_files/paper/2023/hash/83a14a36de4502bac5b580db36e81858-Abstract-Conference.html) · [📊 data](https://datadryad.org/dataset/doi:10.5061/dryad.hqbzkh1p6)
-- 📄 **Long-term unsupervised recalibration of cursor-based intracortical BCIs** (2025, Nature Biomedical Engineering) — [paper](https://www.nature.com/articles/s41551-025-01536-z)
-- 📄 **MINDFUL: measuring instability in chronic human intracortical recordings** (2024, bioRxiv) — [paper](https://www.biorxiv.org/content/10.1101/2024.02.29.582733v1)
+- 📄 **Long-term unsupervised recalibration of cursor-based intracortical BCIs (HMM)** (Wilson et al. / Stanford, 2025, Nature Biomedical Engineering) — HMM infers intended targets to retrain without calibration blocks. [paper](https://www.nature.com/articles/s41551-025-01536-z)
+- 📄 **Closed-loop decoder adaptation shapes neural plasticity for skillful neuroprosthetic control** (Orsborn / Carmena, 2014, Neuron) — classic CLDA co-adaptation paradigm. [paper](https://pubmed.ncbi.nlm.nih.gov/24945777/)
+
+**Domain adaptation & adversarial alignment**
+- 📄 **Adversarial domain adaptation for stable brain-machine interfaces (ADAN)** (Farshchian / Gallego / Bengio / Miller, 2019, ICLR) — seminal adversarial latent-distribution alignment for BMI stability. [paper](https://arxiv.org/abs/1810.00045) · [💻 code](https://github.com/farshchian/ADAN)
+- 📄 **Using adversarial networks to extend BCI decoding accuracy over time (Cycle-GAN aligner)** (Ma et al. / Miller Lab, 2023, eLife) — cycle-consistent full-dimensional alignment across days; outperforms ADAN. [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC10446822/) · [💻 code](https://github.com/limblab/adversarial_BCI)
+- 📄 **Robust alignment of cross-session recordings by behaviour via unsupervised domain adaptation** (Jude / Hennig, 2022, ICML) — seqVAE + UDA for stable cross-session latents. [paper](https://proceedings.mlr.press/v162/jude22a/jude22a.pdf)
+- 📄 **ERDiff: latent dynamics alignment with diffusion models** (Wang et al. / Georgia Tech, 2023, NeurIPS) — source-free distribution alignment using a diffusion prior. [paper](https://arxiv.org/abs/2306.06138) · [💻 code](https://papers.neurips.cc/paper_files/paper/2023/file/7abbcb05a5d55157ede410bb718e32d7-Paper-Conference.pdf)
+- 📄 **A cryptography-based approach for movement decoding** (Dyer et al., 2017, Nature Biomedical Engineering) — label-free cross-time/subject alignment, early recalibration paradigm. [paper](https://pubmed.ncbi.nlm.nih.gov/31015712/)
+- 📄 **SeSA: speed-enhanced subdomain adaptation for long-term stable neural decoding** (Wang / Wang et al. / ZJU, 2024) — subdomain-alignment regression for long-term stability. [paper](https://arxiv.org/html/2407.17758v1)
+- 📄 **Partial domain adaptation for stable neural decoding in intracortical BCIs** (Wang / Qi et al. / ZJU, 2025) — partial DA for stable cross-day representations. [paper](https://pubmed.ncbi.nlm.nih.gov/40522806/)
+- 📄 **T-TIME: test-time information-maximization ensemble for plug-and-play BCIs** (2024) — fully-online label-free test-time adaptation. [paper](https://arxiv.org/html/2412.07228v1)
+
+**Clinical self-calibration (intent-inference)**
+- 📄 **Virtual typing by people with tetraplegia using a self-calibrating intracortical BCI** (Jarosiewicz / BrainGate, 2015, Science Translational Medicine) — retrospective target inference (RTI) auto-compensates nonstationarity. [paper](https://pubmed.ncbi.nlm.nih.gov/26560357/)
+- 📄 **Retrospectively supervised click-decoder calibration for self-calibrating point-and-click BCIs** (BrainGate, 2017) — recalibrate clicks from real usage data. [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC5591042/)
+
+**Measuring instability, longevity & benchmarks**
+- 📄 **Intra-day signal instabilities affect decoding performance in an intracortical neural interface** (Perge / BrainGate, 2013, J. Neural Eng.) — foundational characterization of why recalibration is needed. [paper](https://pubmed.ncbi.nlm.nih.gov/23574741/)
+- 📄 **MINDFUL: measuring instability in chronic human intracortical recordings** (2024, Communications Biology) — label-free instability metric to decide when to recalibrate. [paper](https://www.nature.com/articles/s42003-024-06784-4)
+- 📄 **FALCON: few-shot algorithms for consistent neural decoding** (SNEL / Pandarinath, 2024, NeurIPS D&B) — first unified benchmark for stable long-term decoding. [paper](https://proceedings.neurips.cc/paper_files/paper/2024/file/8c2e6bb15be1894b8fb4e0f9bcad1739-Paper-Datasets_and_Benchmarks_Track.pdf)
+- 📄 **LINK: long-term intracortical neural activity & kinematics** (Temmar / Willsey, 2025, NeurIPS D&B) — 303 sessions / 117k trials of chronic finger movement for drift & stability research. [paper](https://neurips.cc/virtual/2025/poster/121631)
 - 📄 **Longevity and reliability of chronic unit recordings using Utah arrays** (2021, J. Neural Eng.) — [paper](https://iopscience.iop.org/article/10.1088/1741-2552/ac3eaf)
 
 ### Cross-Subject / Cross-Session Transfer (跨被试/跨会话迁移)
@@ -297,7 +328,9 @@ Keeping a decoder working over months/years despite neural drift and electrode d
 - 📄 **Leveraging generative models for unsupervised alignment of neural time series** (2024, ICLR) — source-free seqVAE reuse to stabilize decoders across sessions. [paper](https://openreview.net/forum?id=9zhHVyLY4K)
 - 📄 **FDA: flow matching for few-trial neural adaptation with stable latent dynamics** (Wang et al., 2025, ICML) — flow-matching distribution alignment for fast decoder adaptation. [paper](https://icml.cc/virtual/2025/poster/44109) · [💻 code](https://github.com/wangpuli/FDA)
 - 📄 **Neural Embeddings Rank (NER): aligning 3D latent dynamics with movements** (2024, NeurIPS) — rank-preserving embedding for stable long-term M1/PMd decoding. [paper](https://neurips.cc/virtual/2024/poster/95804)
-- 📄 *(see also POYO, NDT2, PopT under [Foundation Models](#neural-foundation-models-神经基础模型) — all target cross-session/subject transfer)*
+- 📄 **MINT: simple decoding of behavior from a complicated neural manifold** (Perkins / Cunningham / Churchland, 2024, eLife) — interpretable manifold-based decoder, robust in stereotyped BCI settings. [paper](https://elifesciences.org/reviewed-preprints/89421v1)
+- 📄 **Transfer learning in BCIs with adversarial variational autoencoders** (Özdenizci et al. / MERL, 2018) — adversarial VAE for invariant cross-subject/session features. [paper](https://www.merl.com/publications/docs/TR2018-184.pdf)
+- 📄 *(see also POYO, NDT2, PopT under [Foundation Models](#neural-foundation-models-神经基础模型); and the [Long-Term Stability](#long-term-stability--recalibration-长期稳定性) section, whose manifold-alignment / domain-adaptation methods directly target cross-session transfer)*
 
 ### Self-Supervised & Representation Learning (自监督表征学习)
 
